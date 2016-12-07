@@ -5,13 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var index = require('./app_server/routes/index');
+var users = require('./app_server/routes/users');
+
+var PORT = process.env.PORT || 3000;
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, 'app_server','views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -44,3 +46,12 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// Configure the app to listen on Port 3000
+app.listen(PORT, (err) => {
+    if(err) {
+        console.log("Server Error", err);
+        process.exit(1);
+    }
+    console.log("Server is up listening to port "+ PORT);
+});
